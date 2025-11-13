@@ -1,0 +1,6 @@
+@COMP306_Group15_OpenLectureAPI_HostAddress = http://localhost:5282
+
+GET {{COMP306_Group15_OpenLectureAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
