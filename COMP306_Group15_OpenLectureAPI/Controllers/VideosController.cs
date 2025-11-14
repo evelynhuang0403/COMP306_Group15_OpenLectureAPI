@@ -231,6 +231,23 @@ namespace COMP306_Group15_OpenLectureAPI.Controllers
             return Ok(new { playbackUrl = url });
         }
 
+        // Increment views: POST /api/videos/{id}/views — Public
+        // Purpose: bump viewCount by 1 when playback actually starts.
+        // Auth: none (views are public).
+        [HttpPost("{id}/views")]
+        public async Task<ActionResult> IncrementView(string id)
+        {
+            var v = await _videos.GetByIdAsync(id);
+            if (v is null || v.IsDeleted) return NotFound();
+
+            // Simple increment; if your repo exposes atomic updates, prefer that.
+            v.ViewCount = (v.ViewCount <= 0) ? 1 : v.ViewCount + 1;
+            v.UpdatedAt = DateTime.UtcNow;
+
+            await _videos.UpdateAsync(v);
+            return Ok(new { viewCount = v.ViewCount });
+        }
+
         private static bool IsValidVisibility(string v) =>
             string.Equals(v, "Public", StringComparison.OrdinalIgnoreCase) ||
             string.Equals(v, "Private", StringComparison.OrdinalIgnoreCase);
