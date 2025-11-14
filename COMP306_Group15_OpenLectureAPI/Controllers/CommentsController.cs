@@ -47,7 +47,6 @@ namespace COMP306_Group15_OpenLectureAPI.Controllers
         }
 
         // Get one comment: GET /api/comments/{id} — Public
-        // Usage: fetch a single comment by its CommentId.
         [HttpGet("{id}")]
         public async Task<ActionResult<CommentReadDto>> GetById(string id)
         {
@@ -63,7 +62,6 @@ namespace COMP306_Group15_OpenLectureAPI.Controllers
 
             return Ok(dto);
         }
-
 
         // List comments for a video: GET /api/comments/videos/{videoId} — Public
         // Query:
@@ -114,6 +112,9 @@ namespace COMP306_Group15_OpenLectureAPI.Controllers
 
             await _comments.CreateAsync(e);
 
+            // keep denormalized counter in sync
+            await UpdateVideoCommentCount(dto.VideoId);
+
             return CreatedAtAction(nameof(GetById), new { id = e.CommentId }, _map.Map<CommentReadDto>(e));
         }
 
@@ -131,6 +132,7 @@ namespace COMP306_Group15_OpenLectureAPI.Controllers
             e.UpdatedAt = DateTime.UtcNow;
 
             await _comments.UpdateAsync(e);
+            // content change does NOT affect count
             return NoContent();
         }
 
@@ -145,10 +147,20 @@ namespace COMP306_Group15_OpenLectureAPI.Controllers
             if (!JwtHelper.IsAdmin(User) && JwtHelper.UserId(User) != e.UserId) return Forbid();
 
             if (dto.Content is not null) e.Content = dto.Content;
-            if (dto.IsDeleted.HasValue) e.IsDeleted = dto.IsDeleted.Value;
+
+            var shouldRecount = false;
+            if (dto.IsDeleted.HasValue)
+            {
+                e.IsDeleted = dto.IsDeleted.Value;
+                shouldRecount = true;
+            }
 
             e.UpdatedAt = DateTime.UtcNow;
             await _comments.UpdateAsync(e);
+
+            if (shouldRecount)
+                await UpdateVideoCommentCount(e.VideoId);
+
             return NoContent();
         }
 
@@ -166,6 +178,10 @@ namespace COMP306_Group15_OpenLectureAPI.Controllers
             e.UpdatedAt = DateTime.UtcNow;
 
             await _comments.UpdateAsync(e);
+
+            // keep denormalized counter in sync
+            await UpdateVideoCommentCount(e.VideoId);
+
             return NoContent();
         }
 
@@ -199,6 +215,17 @@ namespace COMP306_Group15_OpenLectureAPI.Controllers
                 });
 
             return Ok(replies);
+        }
+
+        // --- helper: recompute and persist the denormalized comment counter on the video
+        private async Task UpdateVideoCommentCount(string videoId)
+        {
+            var video = await _videos.GetByIdAsync(videoId);
+            if (video is null) return;
+
+            var all = await _comments.GetAllAsync();
+            video.CommentCount = all.Count(c => c.VideoId == videoId && !c.IsDeleted);
+            await _videos.UpdateAsync(video);
         }
     }
 }
