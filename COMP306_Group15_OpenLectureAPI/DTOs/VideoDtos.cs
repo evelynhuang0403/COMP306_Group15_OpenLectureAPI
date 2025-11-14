@@ -1,5 +1,4 @@
-﻿// DTOs/VideoDtos.cs
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace COMP306_Group15_OpenLectureAPI.DTOs

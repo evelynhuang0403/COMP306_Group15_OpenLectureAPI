@@ -1,10 +1,7 @@
-﻿namespace COMP306_Group15_OpenLectureAPI.Data
-{
-    using Amazon.DynamoDBv2.DataModel;
-    using Amazon.DynamoDBv2.DocumentModel;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+﻿using Amazon.DynamoDBv2.DataModel;
 
+namespace COMP306_Group15_OpenLectureAPI.Data
+{
     public interface IDynamoRepo<T> where T : class
     {
         Task<List<T>> GetAllAsync();

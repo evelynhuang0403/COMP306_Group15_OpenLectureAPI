@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using COMP306_Group15_OpenLectureAPI.Data;
 using COMP306_Group15_OpenLectureAPI.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using static COMP306_Group15_OpenLectureAPI.DTOs.UserDtos;
 
 namespace COMP306_Group15_OpenLectureAPI.Controllers

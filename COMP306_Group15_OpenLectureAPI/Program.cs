@@ -5,7 +5,6 @@ using Amazon.S3;
 using COMP306_Group15_OpenLectureAPI.Data;
 using COMP306_Group15_OpenLectureAPI.Mapping;
 using COMP306_Group15_OpenLectureAPI.Models;
-using COMP306_Group15_OpenLectureAPI.Models.COMP306_Group15_OpenLectureAPI.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;

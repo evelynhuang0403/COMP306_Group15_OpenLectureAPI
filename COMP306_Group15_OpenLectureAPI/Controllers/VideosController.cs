@@ -1,14 +1,9 @@
 ﻿// Controllers/VideosController.cs
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Amazon.S3;
 using Amazon.S3.Model;
 using AutoMapper;
 using COMP306_Group15_OpenLectureAPI.Data;
-using COMP306_Group15_OpenLectureAPI.DTOs;
 using COMP306_Group15_OpenLectureAPI.Models;
-using COMP306_Group15_OpenLectureAPI.Models.COMP306_Group15_OpenLectureAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static COMP306_Group15_OpenLectureAPI.DTOs.VideoDtos;

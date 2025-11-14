@@ -1,7 +1,5 @@
-﻿// Mapping/MappingProfile.cs
-using AutoMapper;
+﻿using AutoMapper;
 using COMP306_Group15_OpenLectureAPI.Models;
-using COMP306_Group15_OpenLectureAPI.Models.COMP306_Group15_OpenLectureAPI.Models;
 using static COMP306_Group15_OpenLectureAPI.DTOs.CommentDtos;
 using static COMP306_Group15_OpenLectureAPI.DTOs.PlaylistDtos;
 using static COMP306_Group15_OpenLectureAPI.DTOs.ReactionDtos;
@@ -40,7 +38,13 @@ namespace COMP306_Group15_OpenLectureAPI.Mapping
             // ---- Comments ----
             CreateMap<CommentItem, CommentReadDto>()
                 .ForMember(d => d.IsOwnerReply, opt => opt.Ignore());
-            CreateMap<CommentCreateDto, CommentItem>();
+
+            CreateMap<CommentCreateDto, CommentItem>()
+                .ForMember(d => d.CommentId, cfg => cfg.Ignore())
+                .ForMember(d => d.CreatedAt, cfg => cfg.Ignore())
+                .ForMember(d => d.UpdatedAt, cfg => cfg.Ignore())
+                .ForMember(d => d.IsDeleted, cfg => cfg.MapFrom(_ => false));
+
             CreateMap<CommentUpdateDto, CommentItem>()
                 .ForAllMembers(opt => opt.Condition((src, dest, val) => val != null));
 

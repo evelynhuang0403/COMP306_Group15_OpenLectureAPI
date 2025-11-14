@@ -1,8 +1,7 @@
-﻿namespace COMP306_Group15_OpenLectureAPI.Models
-{
-    // Models/UserItem.cs
-    using Amazon.DynamoDBv2.DataModel;
+﻿using Amazon.DynamoDBv2.DataModel;
 
+namespace COMP306_Group15_OpenLectureAPI.Models
+{
     [DynamoDBTable("OpenLecture_Users")]
     public class UserItem
     {

@@ -1,8 +1,8 @@
-﻿namespace COMP306_Group15_OpenLectureAPI.Models
-{
-    using Amazon.DynamoDBv2.DataModel;
-    using System.Collections.Generic;
+﻿using Amazon.DynamoDBv2.DataModel;
+using System.Collections.Generic;
 
+namespace COMP306_Group15_OpenLectureAPI.Models
+{
     [DynamoDBTable("OpenLecture_Playlists")]
     public class PlaylistItem
     {

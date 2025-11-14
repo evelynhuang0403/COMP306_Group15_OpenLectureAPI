@@ -1,6 +1,5 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
-using COMP306_Group15_OpenLectureAPI.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static COMP306_Group15_OpenLectureAPI.DTOs.UploadDtos;

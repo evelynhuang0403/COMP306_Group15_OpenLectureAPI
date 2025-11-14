@@ -1,7 +1,7 @@
-﻿namespace COMP306_Group15_OpenLectureAPI.Models
-{
-    using Amazon.DynamoDBv2.DataModel;
+﻿using Amazon.DynamoDBv2.DataModel;
 
+namespace COMP306_Group15_OpenLectureAPI.Models
+{
     [DynamoDBTable("OpenLecture_Reactions")]
     public class ReactionItem
     {
